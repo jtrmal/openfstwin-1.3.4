@@ -84,10 +84,10 @@ bool WritePotentials(const string& filename,
   if (!*strm)
     LOG(ERROR) << "WritePotentials: Write failed: "
                << (filename.empty() ? "standard output" : filename);
-  bool ret = *strm;
+  bool ret = !(*strm);
   if (strm != &cout)
     delete strm;
-  return ret;
+  return !ret;
 }
 
 
