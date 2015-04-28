@@ -61,7 +61,7 @@ class MappedFile {
   // The file name must also be provided in the FstReadOptions as opts.source
   // or else mapping will fail.  If mapping is not possible, then a MappedFile
   // object with a new[]'ed  block of memory will be created.
-  static MappedFile* Map(istream* s, const FstReadOptions& opts, size_t size);
+  static OPENFSTDLL MappedFile* Map(istream* s, const FstReadOptions& opts, size_t size);
 
   // Creates a MappedFile object with a new[]'ed block of memory of size.
   // RECOMMENDED FOR INTERNAL USE ONLY, may change in future releases.

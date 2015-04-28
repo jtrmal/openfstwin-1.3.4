@@ -67,12 +67,12 @@ struct FstReadOptions {
                                 // this info (read and skip stream osymbols)
   FileReadMode mode;            // Read or map files (advisory, if possible)
 
-  explicit FstReadOptions(const string& src = "<unspecified>",
+  explicit OPENFSTDLL  FstReadOptions(const string& src = "<unspecified>",
                           const FstHeader *hdr = 0,
                           const SymbolTable* isym = 0,
                           const SymbolTable* osym = 0);
 
-  explicit FstReadOptions(const string& src,
+  explicit OPENFSTDLL FstReadOptions(const string& src,
                           const SymbolTable* isym,
                           const SymbolTable* osym = 0);
 
