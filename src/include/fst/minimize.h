@@ -134,7 +134,14 @@ class CyclicMinimizer {
   typedef typename A::Weight Weight;
   typedef ReverseArc<A> RevA;
 
-  CyclicMinimizer(const ExpandedFst<A>& fst) {
+  CyclicMinimizer(const ExpandedFst<A>& fst):
+      // tell the Partition data-member to expect multiple repeated
+      // calls to SplitOn with the same element if we are non-deterministic.
+      P_(fst.Properties(kIDeterministic, true) == 0) {
+    if(fst.Properties(kIDeterministic, true) == 0)
+      CHECK(Weight::Properties() & kIdempotent); // this minimization
+    // algorithm for non-deterministic FSTs can only work with idempotent
+    // semirings.
     Initialize(fst);
     Compute(fst);
   }
@@ -315,7 +322,13 @@ class AcyclicMinimizer {
   typedef typename A::StateId ClassId;
   typedef typename A::Weight Weight;
 
-  AcyclicMinimizer(const ExpandedFst<A>& fst) {
+  AcyclicMinimizer(const ExpandedFst<A>& fst):
+      // tell the Partition data-member to expect multiple repeated
+      // calls to SplitOn with the same element if we are non-deterministic.
+      partition_(fst.Properties(kIDeterministic, true) == 0) {
+    if(fst.Properties(kIDeterministic, true) == 0)
+      CHECK(Weight::Properties() & kIdempotent); // minimization for
+    // non-deterministic FSTs can only work with idempotent semirings.
     Initialize(fst);
     Refine(fst);
   }
@@ -531,13 +544,7 @@ template <class A>
 void Minimize(MutableFst<A>* fst,
               MutableFst<A>* sfst = 0,
               float delta = kDelta) {
-  uint64 props = fst->Properties(kAcceptor | kIDeterministic|
-                                 kWeighted | kUnweighted, true);
-  if (!(props & kIDeterministic)) {
-    FSTERROR() << "FST is not deterministic";
-    fst->SetProperties(kError, kError);
-    return;
-  }
+  uint64 props = fst->Properties(kAcceptor | kWeighted | kUnweighted, true);
 
   if (!(props & kAcceptor)) {  // weighted transducer
     VectorFst< GallicArc<A, STRING_LEFT> > gfst;

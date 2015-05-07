@@ -112,7 +112,7 @@ class IntervalReachVisitor {
   void FinishState(StateId s, StateId p, const A *arc) {
     if (index_ >= 0 && fst_.Final(s) != Weight::Zero()) {
       vector<Interval> *intervals = (*isets_)[s].Intervals();
-      (*intervals)[0].end = index_;      // Update tree interval end
+      (*intervals)[0].end_ = index_;      // Update tree interval end
     }
     (*isets_)[s].Normalize();
     if (p != kNoStateId)

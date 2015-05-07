@@ -45,6 +45,12 @@ DECLARE_bool(fst_align);
 
 namespace fst {
 
+	typedef ::int64 int64;
+	typedef ::uint64 uint64;
+	typedef ::int32 int32;
+	typedef ::uint32 uint32;
+
+
 bool OPENFSTDLL IsFstHeader(istream &, const string &); //ChangedPD
 
 class FstHeader;
