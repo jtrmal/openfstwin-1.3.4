@@ -43,8 +43,8 @@ class Partition {
   friend class PartitionIterator<T>;
 
   struct Element {
-    Element() : value(0), next(0), prev(0) {}
-    Element(T v) : value(v), next(0), prev(0) {}
+   Element() : value(0), next(0), prev(0) {}
+   Element(T v) : value(v), next(0), prev(0) {}
 
    T        value;
    Element* next;
@@ -52,11 +52,9 @@ class Partition {
   };
 
  public:
-  Partition(bool allow_repeated_split):
-      allow_repeated_split_(allow_repeated_split) {}
+  Partition() {}
 
-  Partition(bool allow_repeated_split, T num_states):
-      allow_repeated_split_(allow_repeated_split) {
+  Partition(T num_states) {
     Initialize(num_states);
   }
 
@@ -139,16 +137,16 @@ class Partition {
     if (class_size_[class_id] == 1) return;
 
     // first time class is split
-    if (split_size_[class_id] == 0) { 
+    if (split_size_[class_id] == 0)
       visited_classes_.push_back(class_id);
-      class_split_[class_id] = classes_[class_id];
-    }
+
     // increment size of split (set of element at head of chain)
     split_size_[class_id]++;
-    
+
     // update split point
-    if (class_split_[class_id] != 0
-        && class_split_[class_id] == elements_[element_id])
+    if (class_split_[class_id] == 0)
+      class_split_[class_id] = classes_[class_id];
+    if (class_split_[class_id] == elements_[element_id])
       class_split_[class_id] = elements_[element_id]->next;
 
     // move to head of chain in same class
@@ -159,31 +157,24 @@ class Partition {
   // class indices of the newly created class. Returns the new_class id
   // or -1 if no new class was created.
   T SplitRefine(T class_id) {
-
-    Element* split_el = class_split_[class_id];
     // only split if necessary
-    //if (class_size_[class_id] == split_size_[class_id]) {
-    if(split_el == NULL) { // we split on everything...
+    if (class_size_[class_id] == split_size_[class_id]) {
+      class_split_[class_id] = 0;
       split_size_[class_id] = 0;
       return -1;
     } else {
-      T new_class = AddClass();
 
-      if(allow_repeated_split_) { // split_size_ is possibly
-        // inaccurate, so work it out exactly.
-        size_t split_count;  Element *e;
-        for(split_count=0,e=classes_[class_id];
-            e != split_el; split_count++, e=e->next);
-        split_size_[class_id] = split_count;
-      }
+      T new_class = AddClass();
       size_t remainder = class_size_[class_id] - split_size_[class_id];
       if (remainder < split_size_[class_id]) {  // add smaller
+        Element* split_el   = class_split_[class_id];
         classes_[new_class] = split_el;
-        split_el->prev->next = 0;
-        split_el->prev = 0;
         class_size_[class_id] = split_size_[class_id];
         class_size_[new_class] = remainder;
+        split_el->prev->next = 0;
+        split_el->prev = 0;
       } else {
+        Element* split_el   = class_split_[class_id];
         classes_[new_class] = classes_[class_id];
         class_size_[class_id] = remainder;
         class_size_[new_class] = split_size_[class_id];
@@ -254,16 +245,10 @@ class Partition {
   vector<T> class_size_;
 
   // size of split for each class
-  // in the nondeterministic case, split_size_ is actually an upper
-  // bound on the size of split for each class.
   vector<T> split_size_;
 
   // set of visited classes to be used in split refine
   vector<T> visited_classes_;
-
-  // true if input fst was deterministic: we can make
-  // certain assumptions in this case that speed up the algorithm.
-  bool allow_repeated_split_;
 };
 
 

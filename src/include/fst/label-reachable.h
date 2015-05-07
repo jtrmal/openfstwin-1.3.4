@@ -359,9 +359,9 @@ class LabelReachable {
                iiter = intervals->begin();
            iiter != intervals->end(); ++iiter) {
         begin_low = LowerBound(aiter, end_low, aiter_end,
-                               aiter_input, iiter->begin_);
+                               aiter_input, iiter->begin);
         end_low = LowerBound(aiter, begin_low, aiter_end,
-                             aiter_input, iiter->end_);
+                             aiter_input, iiter->end);
         if (end_low - begin_low > 0) {
           if (reach_begin_ < 0)
             reach_begin_ = begin_low;
