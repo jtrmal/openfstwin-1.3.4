@@ -23,8 +23,10 @@
 #ifdef _MSC_VER //AddedPD
 #include <BaseTsd.h>
 typedef SSIZE_T ssize_t;
-#define snprintf _snprintf
-#define strtoll _strtoi64
+#if _MSC_VER < 1900
+	#define snprintf _snprintf
+	#define strtoll _strtoi64
+#endif
 #ifndef OPENFSTEXPORT
 	#ifdef _DEBUG
     #ifdef _M_X64
