@@ -29,7 +29,7 @@
 
 using std::string;
 
-DECLARE_int32(v);
+DECLARE_CORE_int32(v);
 
 class LogMessage {
  public:

@@ -453,7 +453,7 @@ uint64 AddArcProperties(uint64 inprops, typename A::StateId s,
   return outprops;
 }
 
-extern const char *PropertyNames[];
+OPENFSTDLL extern const char *PropertyNames[];
 
 }  // namespace fst
 

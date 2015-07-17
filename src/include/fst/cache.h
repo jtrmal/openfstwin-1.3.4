@@ -29,8 +29,8 @@ using std::vector;
 #include <fst/vector-fst.h>
 
 
-DECLARE_bool(fst_default_cache_gc);
-DECLARE_int64(fst_default_cache_gc_limit);
+DECLARE_CORE_bool(fst_default_cache_gc);
+DECLARE_CORE_int64(fst_default_cache_gc_limit);
 
 namespace fst {
 

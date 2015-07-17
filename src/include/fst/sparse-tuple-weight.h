@@ -40,8 +40,8 @@ using std::tr1::unordered_multimap;
 #include <fst/weight.h>
 
 
-DECLARE_string(fst_weight_parentheses);
-DECLARE_string(fst_weight_separator);
+DECLARE_CORE_string(fst_weight_parentheses);
+DECLARE_CORE_string(fst_weight_separator);
 
 namespace fst {
 

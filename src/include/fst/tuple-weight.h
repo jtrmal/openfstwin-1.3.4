@@ -28,8 +28,8 @@ using std::vector;
 #include <fst/weight.h>
 
 
-DECLARE_string(fst_weight_parentheses);
-DECLARE_string(fst_weight_separator);
+DECLARE_CORE_string(fst_weight_parentheses);
+DECLARE_CORE_string(fst_weight_separator);
 
 namespace fst {
 

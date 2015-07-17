@@ -24,7 +24,7 @@
 #include <fstream>
 #include <sstream>
 
-DECLARE_int32(fst_arch_alignment);  // defined in mapped-file.h
+DECLARE_CORE_int32(fst_arch_alignment);  // defined in mapped-file.h
 
 namespace fst {
 

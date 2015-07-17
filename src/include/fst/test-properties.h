@@ -29,7 +29,7 @@ using std::tr1::unordered_multiset;
 #include <fst/connect.h>
 
 
-DECLARE_bool(fst_verify_properties);
+DECLARE_CORE_bool(fst_verify_properties);
 
 namespace fst {
 

@@ -41,7 +41,7 @@
 #include <fst/util.h>
 
 
-DECLARE_bool(fst_align);
+DECLARE_CORE_bool(fst_align);
 
 namespace fst {
 

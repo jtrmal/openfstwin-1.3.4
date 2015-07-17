@@ -36,7 +36,7 @@ using std::vector;
 #include <fst/util.h>
 #include <fst/vector-fst.h>
 
-DECLARE_string(fst_field_separator);
+DECLARE_CORE_string(fst_field_separator);
 
 namespace fst {
 

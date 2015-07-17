@@ -27,7 +27,7 @@
 #include <fst/icu.h>
 #include <fst/mutable-fst.h>
 
-DECLARE_string(fst_field_separator);
+DECLARE_CORE_string(fst_field_separator);
 
 namespace fst {
 

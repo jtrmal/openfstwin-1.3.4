@@ -25,6 +25,7 @@
 #include <fst/random-weight.h>
 
 DECLARE_int32(repeat);  // defined in ./algo_test.cc
+DECLARE_CORE_string(tmpdir);
 
 namespace fst {
 

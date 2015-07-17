@@ -30,7 +30,7 @@ using std::vector;
 #include <fst/shortest-distance.h>
 #include <fst/string.h>
 
-DECLARE_string(far_field_separator);
+DECLARE_CORE_string(far_field_separator);
 
 namespace fst {
 

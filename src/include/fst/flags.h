@@ -30,7 +30,7 @@
 #include <fst/lock.h>
 
 using std::string;
-#ifdef _MSC_VER 
+#ifdef _MSC_VER
 	#define strtoll _strtoi64
 	#define atoll atol
 	//#ifndef I_AM_A_DLL
@@ -41,12 +41,12 @@ using std::string;
 	//#define IMPORT __declspec(dllexport)
 	//#endif
 	#ifdef OPENFSTEXPORT
-		#define  OPENFSTDLL  __declspec(dllexport) 
+		#define  OPENFSTDLL  __declspec(dllexport)
 	#else
 		#define  OPENFSTDLL __declspec(dllimport)
 	#endif
 #else
-		#define OPENFSTDLL  
+		#define OPENFSTDLL
 #endif
 //
 // FLAGS USAGE:
@@ -67,11 +67,19 @@ using std::string;
 // ShowUsage() can be used to print out command and flag usage.
 //
 
-#define DECLARE_bool(name) OPENFSTDLL extern bool FLAGS_ ## name
-#define DECLARE_string(name) OPENFSTDLL extern string FLAGS_ ## name
-#define DECLARE_int32(name) OPENFSTDLL extern int32 FLAGS_ ## name
-#define DECLARE_int64(name) OPENFSTDLL extern int64 FLAGS_ ## name
-#define DECLARE_double(name) OPENFSTDLL extern double FLAGS_ ## name
+#define DECLARE_CORE_bool(name) OPENFSTDLL extern bool FLAGS_ ## name
+#define DECLARE_CORE_string(name) OPENFSTDLL extern string FLAGS_ ## name
+#define DECLARE_CORE_int32(name) OPENFSTDLL extern int32 FLAGS_ ## name
+#define DECLARE_CORE_int64(name) OPENFSTDLL extern int64 FLAGS_ ## name
+#define DECLARE_CORE_double(name) OPENFSTDLL extern double FLAGS_ ## name
+
+#ifndef OPENFSTEXPORT
+#define DECLARE_bool(name)  extern bool FLAGS_ ## name
+#define DECLARE_string(name)  extern string FLAGS_ ## name
+#define DECLARE_int32(name)  extern int32 FLAGS_ ## name
+#define DECLARE_int64(name)  extern int64 FLAGS_ ## name
+#define DECLARE_double(name)  extern double FLAGS_ ## name
+#endif
 
 template <typename T>
 struct FlagDescription {
@@ -223,7 +231,17 @@ class FlagRegisterer {
   DISALLOW_COPY_AND_ASSIGN(FlagRegisterer);
 };
 
+#ifdef OPENFSTEXPORT
+#define DEFINE_VAR(type, name, value, doc)                                \
+  __declspec(dllexport) type FLAGS_ ## name = value;                      \
+  static FlagRegisterer<type>                                             \
+  name ## _flags_registerer(#name, FlagDescription<type>(&FLAGS_ ## name, \
+                                                         doc,             \
+                                                         #type,           \
+                                                         __FILE__,        \
+                                                         value))
 
+#else
 #define DEFINE_VAR(type, name, value, doc)                                \
   type FLAGS_ ## name = value;                                            \
   static FlagRegisterer<type>                                             \
@@ -232,6 +250,7 @@ class FlagRegisterer {
                                                          #type,           \
                                                          __FILE__,        \
                                                          value))
+#endif
 
 #define DEFINE_bool(name, value, doc) DEFINE_VAR(bool, name, value, doc)
 #define DEFINE_string(name, value, doc) \
@@ -242,10 +261,10 @@ class FlagRegisterer {
 
 
 // Temporary directory
-DECLARE_string(tmpdir);
+DECLARE_CORE_string(tmpdir);
 
 void OPENFSTDLL SetFlags(const char *usage, int *argc, char ***argv, bool remove_flags, //ChangedPD
-              const char *src = ""); 
+              const char *src = "");
 
 #define SET_FLAGS(usage, argc, argv, rmflags) \
 SetFlags(usage, argc, argv, rmflags, __FILE__)

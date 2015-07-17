@@ -26,7 +26,7 @@
 #include <fst/vector-fst.h>
 #include <fst/verify.h>
 
-DECLARE_string(tmpdir);
+DECLARE_CORE_string(tmpdir);
 
 namespace fst {
 

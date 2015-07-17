@@ -38,7 +38,7 @@ using std::vector;
 
 #include <map>
 
-DECLARE_bool(fst_compat_symbols);
+DECLARE_CORE_bool(fst_compat_symbols);
 
 namespace fst {
 

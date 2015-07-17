@@ -29,8 +29,8 @@
 #include <fst/matcher.h>
 
 
-DECLARE_string(save_relabel_ipairs);
-DECLARE_string(save_relabel_opairs);
+DECLARE_CORE_string(save_relabel_ipairs);
+DECLARE_CORE_string(save_relabel_opairs);
 
 namespace fst {
 

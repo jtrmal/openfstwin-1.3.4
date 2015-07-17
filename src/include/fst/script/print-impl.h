@@ -28,7 +28,7 @@
 #include <fst/fst.h>
 #include <fst/util.h>
 
-DECLARE_string(fst_field_separator);
+DECLARE_CORE_string(fst_field_separator);
 
 namespace fst {
 

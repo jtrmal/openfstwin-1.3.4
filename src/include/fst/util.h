@@ -47,7 +47,7 @@ using std::vector;
 // UTILITY FOR ERROR HANDLING
 //
 
-DECLARE_bool(fst_error_fatal);
+DECLARE_CORE_bool(fst_error_fatal);
 
 #define FSTERROR() (FLAGS_fst_error_fatal ? LOG(FATAL) : LOG(ERROR))
 
